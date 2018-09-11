@@ -1,0 +1,30 @@
+---
+- name: Setup jenkins
+  hosts: all
+  sudo: yes
+
+  tasks:
+  - name: Begin setup of docker and jenkins containers
+    debug:
+      msg: "Setting up docker and jenkins"
+
+# todo docker should already be there
+  - name: install docker
+    yum:
+      name: docker
+
+  - name: Ensure Docker is started and enabled at boot.
+    service:
+      name: docker
+      state: "started"
+      enabled: "yes"
+
+  # You can also use the 'args' form to provide the options.
+  - name: Start jenkins master as docker container
+    shell: docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home --name jenkins rgoodwin/jenkins-master-preconfigured
+    register: docker_master_exec
+
+  # this uses deprecated docker container linking if you want to use newer container networking see: https://kubernetes.io/
+  - name: Start jenkins slave as docker container
+    shell: docker run -d -v /var/run/docker.sock:/var/run/docker.sock --link jenkins:jenkins --name jenkins_slave rgoodwin/docker-centos-jenkins-swarm-slave -master http://jenkins:8080  -name jenkins-docker-slave -labels docker-build -mode exclusive -username admin -password admin
+    register: docker_master_exec
