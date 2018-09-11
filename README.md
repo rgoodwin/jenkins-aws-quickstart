@@ -10,11 +10,11 @@ Generally, this is meant to serve as an example for customization.
 
 #### Quick Start
 
-Launch the infrastructure using terraform
+Launch the infrastructure using terraform (requires an exiting keypair configured at AWS)
 
 ```bash
 cd provision-terraform
-terraform apply
+terraform apply -var "jenkins_host_keypair=<name of ssh keypair you want to use>"
 ```
 
 Run ansible playbook to provision 

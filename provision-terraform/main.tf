@@ -19,8 +19,7 @@ variable "jenkins_ami" {
   default = "ami-0a12cabbe7d40046a"
 }
 variable "jenkins_host_keypair" {
-  description = "SSH keypair to use for jenkins hosts"
-  default = "MainPair"
+  description = "SSH keypair to use for jenkins hosts. This must exist already."
 }
 
 variable "jenkins_instance_type" {
