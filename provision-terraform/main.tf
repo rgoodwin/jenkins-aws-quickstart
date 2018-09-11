@@ -15,8 +15,7 @@ data "aws_subnet_ids" "jenkins_subnets" {
 
 variable "jenkins_ami" {
   description = "AMI for jenkins/docker hosts, defaults to AMZ linux"
-//  default = "ami-f9c16a99"
-  default = "ami-0a12cabbe7d40046a"
+  default = "ami-0b59bfac6be064b78"
 }
 variable "jenkins_host_keypair" {
   description = "SSH keypair to use for jenkins hosts. This must exist already."
